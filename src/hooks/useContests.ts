@@ -17,11 +17,6 @@ export const useContests = () => {
     queryFn: async (): Promise<Contest[]> => {
       console.log('Fetching contests from direct sources...');
       
-      // Helper to handle CORS in production using a proxy
-      const getUrl = (target: string, devProxy: string) => {
-        return import.meta.env.DEV ? devProxy : `https://corsproxy.io/?${encodeURIComponent(target)}`;
-      };
-
       // 1. Fetch Codeforces (Direct fetch usually works, or use proxy if needed)
       // User reported this works, so keeping it direct for now.
       const cfPromise = fetch('https://codeforces.com/api/contest.list?gym=false')
@@ -44,15 +39,33 @@ export const useContests = () => {
         });
 
       // 2. Fetch LeetCode
-      const lcPromise = fetch(getUrl('https://leetcode.com/graphql', '/leetcode-api/graphql'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query: `query upcomingContests { upcomingContests { title titleSlug startTime duration } }`
+      let lcPromise;
+      if (import.meta.env.DEV) {
+        lcPromise = fetch('/leetcode-api/graphql', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: `query upcomingContests { upcomingContests { title titleSlug startTime duration } }`
+          })
         })
-      })
         .then(res => res.json())
-        .then(data => data.data.upcomingContests.map((c: any) => ({
+        .then(data => data.data.upcomingContests);
+      } else {
+        // In production, use allorigins.win with GET request
+        const query = `query upcomingContests { upcomingContests { title titleSlug startTime duration } }`;
+        const targetUrl = `https://leetcode.com/graphql?query=${encodeURIComponent(query)}`;
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
+        
+        lcPromise = fetch(proxyUrl)
+          .then(res => res.json())
+          .then(data => {
+            // allorigins returns the actual response in 'contents' field as a string
+            const innerData = JSON.parse(data.contents);
+            return innerData.data.upcomingContests;
+          });
+      }
+
+      lcPromise = lcPromise.then(contests => contests.map((c: any) => ({
           name: c.title,
           url: `https://leetcode.com/contest/${c.titleSlug}`,
           start_time: new Date(c.startTime * 1000).toISOString(),
@@ -68,12 +81,19 @@ export const useContests = () => {
         });
 
       // 3. Fetch CodeChef
-      const ccPromise = fetch(getUrl(
-        'https://www.codechef.com/api/list/contests/all?sort_by=START&sorting_order=asc&offset=0&mode=all',
-        '/codechef-api/list/contests/all?sort_by=START&sorting_order=asc&offset=0&mode=all'
-      ))
-        .then(res => res.json())
-        .then(data => data.future_contests.map((c: any) => ({
+      let ccPromise;
+      if (import.meta.env.DEV) {
+        ccPromise = fetch('/codechef-api/list/contests/all?sort_by=START&sorting_order=asc&offset=0&mode=all')
+          .then(res => res.json());
+      } else {
+        // In production, use allorigins.win/raw
+        const targetUrl = 'https://www.codechef.com/api/list/contests/all?sort_by=START&sorting_order=asc&offset=0&mode=all';
+        const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`;
+        ccPromise = fetch(proxyUrl)
+          .then(res => res.json());
+      }
+
+      ccPromise = ccPromise.then(data => data.future_contests.map((c: any) => ({
           name: c.contest_name,
           url: `https://www.codechef.com/${c.contest_code}`,
           start_time: c.contest_start_date_iso,
