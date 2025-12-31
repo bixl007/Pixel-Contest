@@ -17,7 +17,13 @@ export const useContests = () => {
     queryFn: async (): Promise<Contest[]> => {
       console.log('Fetching contests from direct sources...');
       
-      // 1. Fetch Codeforces
+      // Helper to handle CORS in production using a proxy
+      const getUrl = (target: string, devProxy: string) => {
+        return import.meta.env.DEV ? devProxy : `https://corsproxy.io/?${encodeURIComponent(target)}`;
+      };
+
+      // 1. Fetch Codeforces (Direct fetch usually works, or use proxy if needed)
+      // User reported this works, so keeping it direct for now.
       const cfPromise = fetch('https://codeforces.com/api/contest.list?gym=false')
         .then(res => res.json())
         .then(data => data.result
@@ -37,8 +43,8 @@ export const useContests = () => {
           return [];
         });
 
-      // 2. Fetch LeetCode (via proxy)
-      const lcPromise = fetch('/leetcode-api/graphql', {
+      // 2. Fetch LeetCode
+      const lcPromise = fetch(getUrl('https://leetcode.com/graphql', '/leetcode-api/graphql'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -61,8 +67,11 @@ export const useContests = () => {
           return [];
         });
 
-      // 3. Fetch CodeChef (via proxy)
-      const ccPromise = fetch('/codechef-api/list/contests/all?sort_by=START&sorting_order=asc&offset=0&mode=all')
+      // 3. Fetch CodeChef
+      const ccPromise = fetch(getUrl(
+        'https://www.codechef.com/api/list/contests/all?sort_by=START&sorting_order=asc&offset=0&mode=all',
+        '/codechef-api/list/contests/all?sort_by=START&sorting_order=asc&offset=0&mode=all'
+      ))
         .then(res => res.json())
         .then(data => data.future_contests.map((c: any) => ({
           name: c.contest_name,
