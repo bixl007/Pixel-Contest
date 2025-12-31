@@ -64,7 +64,7 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
       href={contest.url}
       target="_blank"
       rel="noopener noreferrer"
-      className={`block p-6 pixel-card group relative overflow-hidden`}
+      className={`block h-full p-6 pixel-card group relative overflow-hidden`}
     >
       {/* Hover Effect Overlay */}
       <div className={`absolute inset-0 opacity-0 group-hover:opacity-5 pointer-events-none transition-opacity duration-200 ${styles.bgColor.replace('/10', '')}`} />
@@ -88,7 +88,7 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
       </div>
 
       {/* Contest Name */}
-      <h3 className="text-xs font-bold text-foreground mb-6 line-clamp-2 leading-relaxed group-hover:text-primary transition-colors relative z-10 h-12">
+      <h3 className="text-xs font-bold text-foreground mb-6 leading-relaxed group-hover:text-primary transition-colors relative z-10">
         {contest.name}
       </h3>
 
