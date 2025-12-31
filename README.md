@@ -1,73 +1,59 @@
-# Welcome to your Lovable project
+# PIXO - Pixel Contest Hub
 
-## Project info
+A retro-futuristic, cyberpunk-styled hub for tracking upcoming competitive programming contests.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🎮 Features
 
-## How can I edit this code?
+- **Real-time Tracking**: Fetches upcoming contests from LeetCode, Codeforces, and CodeChef.
+- **Cyberpunk UI**: Dark mode, scanlines, glitch effects, and neon accents.
+- **Filtering**: Easily filter contests by platform.
+- **Countdown**: Live countdown timers for upcoming and active contests.
 
-There are several ways of editing your application.
+## 🛠️ Tech Stack
 
-**Use Lovable**
+- **Framework**: React + Vite
+- **Styling**: Tailwind CSS + Custom CSS (Pixel Art & Glitch Effects)
+- **Language**: TypeScript
+- **Backend/API**: Supabase Edge Functions
+- **UI Components**: Shadcn UI
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 🚀 Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js (v18 or higher)
+- npm or bun
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/bixl007/Pixel-Contest.git
+   cd Pixel-Contest
+   ```
 
-Follow these steps:
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   bun install
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+3. Start the development server:
+   ```bash
+   npm run dev
+   # or
+   bun dev
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+4. Open your browser at `http://localhost:8080`
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 🎨 Customization
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+The UI is heavily customized using Tailwind CSS and `src/index.css`.
+- **Theme**: Variables are defined in `src/index.css` (colors, scanlines, animations).
+- **Fonts**: Uses 'Press Start 2P' for that authentic 8-bit feel.
 
-**Edit a file directly in GitHub**
+## 📄 License
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+MIT
