@@ -17,33 +17,33 @@ export const Header = ({ contestCount }: HeaderProps) => {
   }, []);
 
   return (
-    <header className="border-b-2 border-border pb-6 mb-8">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <header className="mb-12">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         {/* Logo & Title */}
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-primary/20 border-2 border-primary">
-            <Terminal className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+        <div className="flex items-center gap-4">
+          <div className="p-3 bg-primary/10 border-2 border-primary pixel-shadow">
+            <Terminal className="w-6 h-6 text-primary" />
           </div>
           <div>
-            <h1 className="text-sm md:text-base text-primary">
-              CONTEST_TRACKER
+            <h1 className="text-2xl font-bold tracking-tight text-gradient-pixel uppercase glitch-text" data-text="PIXO">
+              PIXO
             </h1>
-            <p className="text-[8px] md:text-[10px] text-muted-foreground mt-1">
-              UPCOMING CODING BATTLES
+            <p className="text-[10px] text-muted-foreground mt-2 font-bold">
+              Track upcoming coding battles
             </p>
           </div>
         </div>
 
         {/* Stats */}
-        <div className="flex items-center gap-4 md:gap-6">
+        <div className="flex items-center gap-8 bg-card p-4 border-2 border-border pixel-shadow">
           <div className="text-right">
-            <div className="text-[8px] md:text-[10px] text-muted-foreground">CONTESTS</div>
-            <div className="text-lg md:text-xl text-primary">{contestCount}</div>
+            <div className="text-[8px] font-bold text-muted-foreground mb-2 uppercase tracking-widest">Active Contests</div>
+            <div className="text-xl font-bold text-primary leading-none">{contestCount}</div>
           </div>
-          <div className="w-px h-8 bg-border" />
+          <div className="w-0.5 h-8 bg-border" />
           <div className="text-right">
-            <div className="text-[8px] md:text-[10px] text-muted-foreground">LOCAL TIME</div>
-            <div className="text-[10px] md:text-xs text-foreground">
+            <div className="text-[8px] font-bold text-muted-foreground mb-2 uppercase tracking-widest">Local Time</div>
+            <div className="text-xs font-bold text-foreground tabular-nums leading-none">
               {currentTime.toLocaleTimeString('en-US', {
                 hour: '2-digit',
                 minute: '2-digit',
@@ -53,13 +53,6 @@ export const Header = ({ contestCount }: HeaderProps) => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Blinking cursor effect */}
-      <div className="mt-4 text-[10px] md:text-xs text-muted-foreground flex items-center gap-1">
-        <span>{'>'}</span>
-        <span>LOADING LIVE DATA</span>
-        <span className="animate-blink">_</span>
       </div>
     </header>
   );
