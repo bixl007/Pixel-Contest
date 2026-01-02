@@ -31,7 +31,7 @@ export const PlatformFilter = ({ platforms, selectedPlatform, onSelect }: Platfo
   const allPlatforms = ['All', ...platforms];
 
   return (
-    <div className="flex flex-wrap gap-3 p-1.5 bg-secondary/30 dark:bg-white/10 backdrop-blur-2xl rounded-full border border-border/50 dark:border-white/20 shadow-2xl inline-flex">
+    <div className="flex flex-wrap gap-2 md:gap-3 p-1.5 bg-secondary/30 dark:bg-white/10 backdrop-blur-2xl rounded-2xl md:rounded-full border border-border/50 dark:border-white/20 shadow-2xl flex md:inline-flex w-full md:w-auto">
       {allPlatforms.map((platform) => {
         const isActive = selectedPlatform === platform;
         const config = platformConfig[platform];
@@ -40,7 +40,7 @@ export const PlatformFilter = ({ platforms, selectedPlatform, onSelect }: Platfo
           <button
             key={platform}
             onClick={() => onSelect(platform)}
-            className={`px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-300 border ${
+            className={`flex-1 md:flex-none px-3 md:px-6 py-2 md:py-2.5 text-sm font-medium rounded-xl md:rounded-full transition-all duration-300 border ${
               isActive 
                 ? config.activeClass
                 : `bg-transparent border-transparent text-muted-foreground hover:text-foreground ${config.hoverClass}`
