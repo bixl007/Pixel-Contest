@@ -177,10 +177,10 @@ export const ContestCard = ({ contest }: ContestCardProps) => {
                 {countdown.isLive ? 'Started' : 'Start Date'}
             </div>
             <div className="text-sm font-medium text-foreground/90">
-              {start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+              {start.toLocaleDateString('en-IN', { month: 'short', day: 'numeric', timeZone: 'Asia/Kolkata' })}
             </div>
              <div className="text-xs text-muted-foreground/80 mt-0.5">
-              {start.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+              {start.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' })}
             </div>
           </div>
           

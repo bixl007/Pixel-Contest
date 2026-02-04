@@ -52,11 +52,16 @@ const fetchClistContests = async (): Promise<Contest[]> => {
     if (c.resource_id === 2) site = 'CodeChef';
     if (c.resource_id === 102) site = 'LeetCode';
 
+    // Clist API returns times in UTC without the 'Z' suffix
+    // Ensure proper UTC parsing by appending 'Z' if not present
+    const startTime = c.start.endsWith('Z') ? c.start : c.start + 'Z';
+    const endTime = c.end.endsWith('Z') ? c.end : c.end + 'Z';
+
     return {
       name: c.event,
       url: c.href,
-      start_time: c.start,
-      end_time: c.end,
+      start_time: startTime,
+      end_time: endTime,
       duration: String(c.duration),
       site,
       in_24_hours: (new Date(c.start).getTime() - Date.now()) < 86400000 ? 'Yes' : 'No',
